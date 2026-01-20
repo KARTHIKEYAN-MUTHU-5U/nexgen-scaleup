@@ -1,0 +1,406 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ========================================================
+// CORE: User & Auth
+// ========================================================
+
+enum UserRole {
+  USER
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+  SUPPORT
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          UserRole  @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+
+  // Academy Relations
+  enrollments   Enrollment[]
+  progress      Progress[]
+  certificates  Certificate[]
+  quizAttempts  QuizAttempt[]
+
+  // WhatsApp SaaS Relations
+  tenantMembers TenantMember[]
+  ownedTenants  Tenant[]       @relation("Owner")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@id([identifier, token])
+}
+
+// ========================================================
+// MODULE: AGENCY & CRM
+// ========================================================
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  PROPOSAL_SENT
+  WON
+  LOST
+}
+
+model Lead {
+  id             String     @id @default(cuid())
+  name           String
+  email          String
+  phone          String?
+  serviceInterest String?
+  budgetRange    String?
+  message        String?
+  status         LeadStatus @default(NEW)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  content     String   // Markdown or HTML
+  excerpt     String?
+  seoTitle    String?
+  seoDesc     String?
+  published   Boolean  @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ========================================================
+// MODULE: ACADEMY (LMS)
+// ========================================================
+
+model Course {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  description String
+  thumbnail   String?
+  level       String?   // Beginner, Intermediate, Advanced
+  price       Decimal   @default(0)
+  isPublished Boolean   @default(false)
+  
+  modules     Module[]
+  enrollments Enrollment[]
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Module {
+  id          String   @id @default(cuid())
+  courseId    String
+  title       String
+  order       Int
+  
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons     Lesson[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Lesson {
+  id            String     @id @default(cuid())
+  moduleId      String
+  title         String
+  description   String?
+  order         Int
+  durationSec   Int        @default(0)
+  isFreePreview Boolean    @default(false)
+
+  videoAssetId  String?
+  videoAsset    VideoAsset? @relation(fields: [videoAssetId], references: [id])
+  
+  module        Module     @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  progress      Progress[]
+  quiz          Quiz?
+
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model VideoAsset {
+  id             String   @id @default(cuid())
+  provider       String   // "mux" or "cloudflare"
+  providerAssetId String
+  playbackId     String?
+  status         String   // "ready", "processing"
+  
+  lessons        Lesson[]
+  createdAt      DateTime @default(now())
+}
+
+model Quiz {
+  id               String     @id @default(cuid())
+  lessonId         String     @unique
+  passScorePercent Int        @default(70)
+  
+  lesson           Lesson     @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  questions        Question[]
+  attempts         QuizAttempt[]
+  
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+enum QuestionType {
+  SINGLE_CHOICE
+  MULTI_SELECT
+  TRUE_FALSE
+}
+
+model Question {
+  id            String       @id @default(cuid())
+  quizId        String
+  type          QuestionType
+  prompt        String
+  optionsJson   Json         // Array of options
+  correctAnswerJson Json     // Array of correct indices or values
+  explanation   String?
+  order         Int          @default(0)
+
+  quiz          Quiz         @relation(fields: [quizId], references: [id], onDelete: Cascade)
+}
+
+model QuizAttempt {
+  id           String   @id @default(cuid())
+  quizId       String
+  userId       String
+  scorePercent Int
+  passed       Boolean
+  answersJson  Json     // Storage of user answers per attempt
+
+  quiz         Quiz     @relation(fields: [quizId], references: [id])
+  user         User     @relation(fields: [userId], references: [id])
+  
+  createdAt    DateTime @default(now())
+}
+
+model Enrollment {
+  id        String    @id @default(cuid())
+  userId    String
+  courseId  String
+  status    String    @default("active") // active, completed
+  
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course    Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([userId, courseId])
+}
+
+model Progress {
+  id           String   @id @default(cuid())
+  userId       String
+  lessonId     String
+  isCompleted  Boolean  @default(false)
+  lastPosition Int      @default(0) // Seconds
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson       Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId, lessonId])
+}
+
+model Certificate {
+  id             String   @id @default(cuid())
+  userId         String
+  courseId       String // No relation to Course forced, to keep history if course deleted? Or relation? Let's keep relation for now.
+  verificationCode String @unique
+  issuedAt       DateTime @default(now())
+
+  user           User     @relation(fields: [userId], references: [id])
+}
+
+// ========================================================
+// MODULE: WHATSAPP SAAS
+// ========================================================
+
+enum TenantRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Tenant {
+  id          String   @id @default(cuid())
+  name        String
+  ownerUserId String
+  
+  owner       User     @relation("Owner", fields: [ownerUserId], references: [id])
+  members     TenantMember[]
+  waAccounts  WaAccount[]
+  waContacts  WaContact[]
+  waTemplates WaTemplate[]
+  waCampaigns WaCampaign[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model TenantMember {
+  id        String     @id @default(cuid())
+  tenantId  String
+  userId    String
+  role      TenantRole @default(MEMBER)
+  
+  tenant    Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, userId])
+}
+
+model WaAccount {
+  id               String   @id @default(cuid())
+  tenantId         String
+  phoneNumberId    String   // From Meta
+  businessAccountId String  // From Meta
+  encryptedToken   String   // System User Token
+  
+  tenant           Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  createdAt        DateTime @default(now())
+}
+
+model WaContact {
+  id            String   @id @default(cuid())
+  tenantId      String
+  phone         String
+  name          String?
+  consentStatus String   @default("unknown") // opted_in, opted_out
+  tagsJson      Json?    // ["vip", "new"]
+  
+  tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  messages      WaMessage[]
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([tenantId, phone])
+}
+
+model WaTemplate {
+  id           String   @id @default(cuid())
+  tenantId     String
+  name         String
+  language     String
+  status       String   // approved, rejected, pending
+  category     String
+  componentsJson Json
+  
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  campaigns    WaCampaign[]
+
+  createdAt    DateTime @default(now())
+}
+
+model WaCampaign {
+  id              String   @id @default(cuid())
+  tenantId        String
+  name            String
+  templateId      String
+  segmentFilterJson Json?
+  scheduleAt      DateTime?
+  status          String   // draft, scheduled, sending, completed
+  
+  tenant          Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  template        WaTemplate @relation(fields: [templateId], references: [id])
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model WaMessage {
+  id            String   @id @default(cuid())
+  tenantId      String
+  waContactId   String
+  direction     String   // inbound, outbound
+  body          String?
+  templateId    String?
+  status        String   // sent, delivered, read, failed
+  providerMsgId String?  @unique
+  
+  contact       WaContact @relation(fields: [waContactId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime @default(now())
+}
+
+// ========================================================
+// SECURITY & LOGGING
+// ========================================================
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  tenantId    String?
+  actorUserId String?
+  action      String
+  targetType  String
+  targetId    String?
+  metadata    Json?
+  ip          String?
+  userAgent   String?
+  
+  createdAt   DateTime @default(now())
+}
