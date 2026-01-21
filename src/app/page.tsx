@@ -1,3 +1,5 @@
+'use client';
+
 import { HeroSection } from "@/components/marketing/hero-section";
 import { ServicesGrid } from "@/components/marketing/services-grid";
 import { CaseStudiesStrip } from "@/components/marketing/case-studies-strip";
@@ -7,8 +9,11 @@ import { Testimonials } from "@/components/marketing/testimonials";
 import { PortalsSection } from "@/components/marketing/portals-section";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useContactModal } from "@/contexts/contact-modal-context";
 
 export default function Home() {
+  const { openContactModal } = useContactModal();
+
   return (
     <main className="flex min-h-screen flex-col bg-background">
       <HeroSection />
@@ -30,11 +35,21 @@ export default function Home() {
             Join the forward-thinking companies automating their growth with NexGen.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" variant="secondary" className="h-14 px-8 text-lg rounded-full w-full sm:w-auto">
+            <Button
+              size="lg"
+              variant="secondary"
+              onClick={() => openContactModal('New Project')}
+              className="h-14 px-8 text-lg rounded-full w-full sm:w-auto"
+            >
               Start Your Project
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            <Button size="lg" variant="outline" className="h-14 px-8 text-lg rounded-full bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary w-full sm:w-auto">
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => openContactModal('Sales Inquiry')}
+              className="h-14 px-8 text-lg rounded-full bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary w-full sm:w-auto"
+            >
               Contact Sales
             </Button>
           </div>

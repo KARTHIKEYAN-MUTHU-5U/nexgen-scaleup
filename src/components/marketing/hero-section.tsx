@@ -4,12 +4,16 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, PlayCircle, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useRef } from 'react';
+import { useContactModal } from '@/contexts/contact-modal-context';
+import { useRouter } from 'next/navigation';
 
 export function HeroSection() {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollY } = useScroll();
     const y1 = useTransform(scrollY, [0, 500], [0, 200]);
     const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+    const { openContactModal } = useContactModal();
+    const router = useRouter();
 
     return (
         <section className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-background">
@@ -63,11 +67,20 @@ export function HeroSection() {
                     transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                     className="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
                 >
-                    <Button size="lg" className="rounded-full text-base h-12 px-8 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 transition-all hover:scale-105">
+                    <Button
+                        size="lg"
+                        onClick={() => openContactModal('Strategy Call')}
+                        className="rounded-full text-base h-12 px-8 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 transition-all hover:scale-105"
+                    >
                         Book a Strategy Call
                         <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
-                    <Button variant="outline" size="lg" className="rounded-full text-base h-12 px-8 border-border bg-background/50 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground backdrop-filter transition-all hover:scale-105">
+                    <Button
+                        variant="outline"
+                        size="lg"
+                        onClick={() => router.push('/case-studies')}
+                        className="rounded-full text-base h-12 px-8 border-border bg-background/50 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground backdrop-filter transition-all hover:scale-105"
+                    >
                         View Case Studies
                         <PlayCircle className="ml-2 h-4 w-4" />
                     </Button>

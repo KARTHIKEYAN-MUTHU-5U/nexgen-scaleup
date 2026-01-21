@@ -5,6 +5,7 @@ import { ArrowUpRight, Code2, MessageSquare, Rocket, Sparkles } from 'lucide-rea
 import React, { useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { useContactModal } from '@/contexts/contact-modal-context';
 
 interface Service {
     id: string;
@@ -73,6 +74,7 @@ const services: Service[] = [
 function TiltCard({ service, index }: { service: Service; index: number }) {
     const ref = useRef<HTMLDivElement>(null);
     const [isExpanded, setIsExpanded] = useState(false);
+    const { openContactModal } = useContactModal();
 
     // Tilt Logic
     const x = useMotionValue(0);
@@ -155,7 +157,7 @@ function TiltCard({ service, index }: { service: Service; index: number }) {
                                     <p className="text-sm"><span className="font-medium">Starting:</span> {service.details.price}</p>
                                 </div>
                             </div>
-                            <Button className="w-full mt-4">Get Proposal</Button>
+                            <Button onClick={() => openContactModal(service.title)} className="w-full mt-4">Get Proposal</Button>
                         </motion.div>
                     ) : (
                         <div className="flex items-center text-sm font-medium text-primary mt-4 group-hover:underline">
@@ -175,6 +177,7 @@ function TiltCard({ service, index }: { service: Service; index: number }) {
 }
 
 export function ServicesGrid() {
+    const { openContactModal } = useContactModal();
     return (
         <section className="py-24 bg-secondary/30 relative overflow-hidden">
             <div className="container px-4 md:px-6 relative z-10">

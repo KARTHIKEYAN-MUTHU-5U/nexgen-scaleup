@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
+import { ContactModalProvider } from "@/contexts/contact-modal-context";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({
@@ -32,7 +33,9 @@ export default function RootLayout({
           sora.variable
         )}
       >
-        {children}
+        <ContactModalProvider>
+          {children}
+        </ContactModalProvider>
       </body>
     </html>
   );

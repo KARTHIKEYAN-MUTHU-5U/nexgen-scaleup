@@ -3,8 +3,11 @@
 import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle, GraduationCap, PlayCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export function AcademySpotlight() {
+    const router = useRouter();
+
     return (
         <section className="py-24 bg-zinc-950 text-white relative overflow-hidden">
             {/* Background blobs */}
@@ -49,10 +52,19 @@ export function AcademySpotlight() {
                         </ul>
 
                         <div className="flex flex-wrap gap-4">
-                            <Button size="lg" className="rounded-full bg-white text-black hover:bg-zinc-200">
+                            <Button
+                                size="lg"
+                                onClick={() => router.push('/academy/courses')}
+                                className="rounded-full bg-white text-black hover:bg-zinc-200"
+                            >
                                 Explore Curriculum
                             </Button>
-                            <Button variant="outline" size="lg" className="rounded-full border-zinc-800 text-white hover:bg-zinc-800 hover:text-white">
+                            <Button
+                                variant="outline"
+                                size="lg"
+                                onClick={() => alert('Video preview coming soon!')}
+                                className="rounded-full border-zinc-800 text-white hover:bg-zinc-800 hover:text-white"
+                            >
                                 <PlayCircle className="mr-2 w-4 h-4" />
                                 Watch Preview
                             </Button>
