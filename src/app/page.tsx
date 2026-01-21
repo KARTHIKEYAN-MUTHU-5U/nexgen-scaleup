@@ -4,6 +4,7 @@ import { CaseStudiesStrip } from "@/components/marketing/case-studies-strip";
 import { ProcessTimeline } from "@/components/marketing/process-timeline";
 import { AcademySpotlight } from "@/components/marketing/academy-spotlight";
 import { Testimonials } from "@/components/marketing/testimonials";
+import { PortalsSection } from "@/components/marketing/portals-section";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -16,6 +17,7 @@ export default function Home() {
       <ProcessTimeline />
       <AcademySpotlight />
       <Testimonials />
+      <PortalsSection />
 
       {/* Final CTA */}
       <section className="py-32 bg-primary text-primary-foreground text-center px-4 relative overflow-hidden">

@@ -50,8 +50,8 @@ export function HeroSection() {
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                    className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
+                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                    className="mt-6 text-lg md:text-xl text-foreground/70 max-w-2xl leading-relaxed"
                 >
                     Digital marketing, web/app development, and WhatsApp automation for modern businesses — plus an advanced AI/LLM academy.
                 </motion.p>

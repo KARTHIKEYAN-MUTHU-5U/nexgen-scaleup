@@ -57,8 +57,8 @@ export function ProcessTimeline() {
             <div className="container px-4 md:px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold font-heading mb-4">Our Process</h2>
-                    <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                        A proven methodology to take you from idea to market-leader.
+                    <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
+                        From discovery to deployment, our proven process ensures on-time delivery and stellar results.
                     </p>
                 </div>
 
@@ -84,7 +84,7 @@ export function ProcessTimeline() {
                                     <step.icon className="w-8 h-8" />
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                                <p className="text-sm text-muted-foreground">{step.description}</p>
+                                <p className="text-sm text-foreground/70">{step.description}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -120,7 +120,7 @@ export function ProcessTimeline() {
                                 </div>
 
                                 <div className="p-8">
-                                    <p className="text-lg text-muted-foreground mb-6">
+                                    <p className="text-lg text-foreground/70 mb-6">
                                         {selectedStep.description}
                                     </p>
 

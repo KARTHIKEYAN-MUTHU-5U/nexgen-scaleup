@@ -116,7 +116,7 @@ function TiltCard({ service, index }: { service: Service; index: number }) {
             onMouseLeave={handleMouseLeave}
             onClick={() => setIsExpanded(!isExpanded)}
             className={cn(
-                "relative rounded-xl bg-card border border-border p-6 shadow-xl cursor-pointer transition-all duration-300",
+                "relative rounded-xl bg-gradient-to-br from-slate-900 to-slate-800 border border-border/50 p-6 shadow-xl cursor-pointer transition-all duration-300",
                 isExpanded ? "col-span-1 md:col-span-2 lg:col-span-2 row-span-2 z-20 scale-100" : "h-[300px] hover:shadow-2xl hover:border-primary/50"
             )}
         >
@@ -126,8 +126,8 @@ function TiltCard({ service, index }: { service: Service; index: number }) {
                         <service.icon className="w-6 h-6" />
                     </div>
 
-                    <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
-                    <p className="text-muted-foreground">{service.description}</p>
+                    <h3 className="text-2xl font-bold mb-2 text-white">{service.title}</h3>
+                    <p className="text-gray-300">{service.description}</p>
                 </div>
 
                 <div className="mt-4">
@@ -182,7 +182,7 @@ export function ServicesGrid() {
                     <h2 className="text-3xl md:text-5xl font-bold font-heading mb-4">
                         Services designed for <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400">exponential growth</span>.
                     </h2>
-                    <p className="text-muted-foreground text-lg">
+                    <p className="text-foreground/70 text-lg">
                         We combine creativity, engineering, and data to build digital products that win.
                     </p>
                 </div>

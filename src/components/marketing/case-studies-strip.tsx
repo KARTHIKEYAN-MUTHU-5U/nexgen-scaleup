@@ -105,7 +105,7 @@ export function CaseStudiesStrip() {
                             Proven Results. <br />
                             <span className="text-muted-foreground">Real Impact.</span>
                         </h2>
-                        <p className="text-lg text-muted-foreground mb-8 max-w-md">
+                        <p className="text-lg text-foreground/70 mb-8 max-w-md">
                             We don't just ship code. We ship outcomes. Explore how we've helped our partners scale.
                         </p>
                         <div className="flex items-center gap-2 text-primary font-medium">
@@ -128,7 +128,7 @@ export function CaseStudiesStrip() {
                                             {project.category}
                                         </span>
                                         <h3 className="text-3xl md:text-5xl font-bold font-heading mb-2">{project.title}</h3>
-                                        <p className="text-xl font-medium text-muted-foreground">{project.client}</p>
+                                        <p className="text-xl font-medium text-foreground/60">{project.client}</p>
                                     </div>
                                     <Button variant="outline" size="icon" className="rounded-full h-12 w-12 shrink-0">
                                         <ArrowUpRight className="h-6 w-6" />
@@ -137,12 +137,12 @@ export function CaseStudiesStrip() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
                                     <div>
-                                        <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                                        <p className="text-lg text-foreground/70 leading-relaxed mb-6">
                                             {project.description}
                                         </p>
                                         <div className="flex flex-wrap gap-2">
                                             {project.tags.map(tag => (
-                                                <span key={tag} className="text-xs font-semibold px-2 py-1 bg-background rounded-md text-muted-foreground">
+                                                <span key={tag} className="text-xs font-semibold px-2 py-1 bg-background rounded-md text-foreground/60">
                                                     #{tag}
                                                 </span>
                                             ))}
@@ -154,7 +154,7 @@ export function CaseStudiesStrip() {
                                             <div key={i} className="bg-background/80 backdrop-blur-sm p-4 rounded-2xl border border-border">
                                                 <stat.icon className="h-5 w-5 text-primary mb-2" />
                                                 <div className="text-2xl md:text-4xl font-bold">{stat.value}</div>
-                                                <div className="text-xs text-muted-foreground uppercase font-semibold tracking-wide">{stat.label}</div>
+                                                <div className="text-xs text-foreground/60 uppercase font-semibold tracking-wide">{stat.label}</div>
                                             </div>
                                         ))}
                                     </div>
