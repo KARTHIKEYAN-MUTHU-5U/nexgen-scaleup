@@ -319,7 +319,7 @@ function FlashlightCard({
 
   return (
     <div
-      className={`group relative border border-white/10 bg-black/50 overflow-hidden clip-diagonal ${className}`}
+      className={`group relative bg-black/50 overflow-hidden clip-diagonal-bordered ${className}`}
       onMouseMove={handleMouseMove}
     >
       <motion.div

@@ -36,6 +36,11 @@ body {
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
 }
 
+.clip-diagonal-bordered {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  filter: drop-shadow(0 0 0.5px rgba(255, 255, 255, 0.1)) drop-shadow(0 0 0.5px rgba(255, 255, 255, 0.1));
+}
+
 /* Text outline for brutalist effect */
 .text-outline {
   -webkit-text-stroke: 1px rgba(255,255,255,0.3);
