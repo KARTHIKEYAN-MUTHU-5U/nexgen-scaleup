@@ -1,33 +1,40 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
-:root {
-  --ea-bg: #0a0a0a;
-  --ea-accent: #f59e0b;
-  --ea-accent-light: #fbbf24;
-  --ea-green: #25D366;
-  --ea-text: #ffffff;
-  --ea-text-muted: #a3a3a3;
-  --ea-surface: #141414;
-  --ea-border: rgba(255,255,255,0.08);
+@theme {
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-ea-bg: #0a0a0a;
+  --color-ea-accent: #f59e0b;
+  --color-ea-accent-light: #fbbf24;
+  --color-ea-green: #25D366;
+  --color-ea-text: #ffffff;
+  --color-ea-text-muted: #a3a3a3;
+  --color-ea-surface: #141414;
+  --color-ea-border: rgba(255,255,255,0.08);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+@layer base {
+  @font-face {
+    font-family: 'Space Grotesk';
+    font-display: swap;
+  }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    background-color: var(--color-ea-bg);
+    color: var(--color-ea-text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
 }
 
-body {
-  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-  background-color: var(--ea-bg);
-  color: var(--ea-text);
-  overflow-x: hidden;
-  line-height: 1.6;
-}
-
+/* These use @utility or are outside layers but won't conflict with Tailwind spacing */
 .font-display { font-family: 'Space Grotesk', sans-serif !important; }
 .font-mono { font-family: 'JetBrains Mono', monospace !important; }
 
@@ -88,11 +95,11 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--ea-bg); }
-::-webkit-scrollbar-thumb { background: var(--ea-accent); border-radius: 3px; }
+::-webkit-scrollbar-track { background: var(--color-ea-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-ea-accent); border-radius: 3px; }
 
 /* Selection */
 ::selection {
-  background: var(--ea-accent);
+  background: var(--color-ea-accent);
   color: black;
 }
