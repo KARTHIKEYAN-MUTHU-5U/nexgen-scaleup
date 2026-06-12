@@ -168,7 +168,7 @@ function QuickServices() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group bg-[#0a0a0a] p-5 clip-diagonal-bordered hover:brightness-110 transition-all cursor-pointer"
+              className="group border border-white/10 bg-[#0a0a0a] p-5 clip-diagonal hover:border-amber-500/50 transition-all cursor-pointer"
             >
               <s.icon size={28} className="text-amber-500 mb-3 group-hover:scale-110 transition-transform" />
               <h3 className="font-display font-bold text-sm uppercase tracking-tight mb-1">{s.label}</h3>
@@ -240,7 +240,7 @@ function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group bg-black/50 p-7 clip-diagonal-bordered hover:brightness-110 transition-all"
+                className="group border border-white/10 bg-black/50 p-7 clip-diagonal hover:border-amber-500/30 transition-all"
               >
                 <div className="flex justify-between items-start mb-5">
                   <doc.icon size={24} className="text-amber-500" />
@@ -261,7 +261,7 @@ function Services() {
           </div>
 
           {/* Certificates sub-section */}
-          <div className="mt-8 bg-black/50 p-7 clip-diagonal-bordered">
+          <div className="mt-8 border border-white/10 bg-black/50 p-7 clip-diagonal">
             <div className="flex items-start gap-4 mb-4">
               <Award size={24} className="text-amber-500 flex-shrink-0 mt-1" />
               <div>
@@ -341,7 +341,7 @@ function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
-              className="relative bg-[#0a0a0a] p-8 clip-diagonal-bordered"
+              className="relative border border-white/10 bg-[#0a0a0a] p-8 clip-diagonal"
             >
               <div className="font-mono text-5xl font-bold text-white/5 absolute top-4 right-6">{step.num}</div>
               <step.icon size={28} className="text-amber-500 mb-6" />
@@ -409,7 +409,7 @@ function TrustSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-black/50 p-8 text-left clip-diagonal-bordered"
+              className="border border-white/10 bg-black/50 p-8 text-left clip-diagonal"
             >
               <b.icon size={24} className="text-amber-500 mb-4" />
               <h3 className="font-display text-lg font-bold uppercase tracking-tight mb-2">{b.title}</h3>
@@ -464,7 +464,7 @@ function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="bg-[#0a0a0a] clip-diagonal-bordered overflow-hidden"
+              className="border border-white/10 bg-[#0a0a0a] clip-diagonal overflow-hidden"
             >
               <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex items-center justify-between p-6 text-left cursor-pointer group">
                 <span className="font-display font-bold text-sm md:text-base uppercase tracking-tight group-hover:text-amber-500 transition-colors pr-4">{faq.q}</span>
@@ -496,7 +496,7 @@ function Contact() {
   return (
     <section id="contact" className="py-32 bg-[#0a0a0a]">
       <div className="max-w-7xl mx-auto px-5 md:px-12">
-        <div className="bg-[#050505] p-8 md:p-16 clip-diagonal-bordered relative overflow-hidden">
+        <div className="border border-white/10 bg-[#050505] p-8 md:p-16 clip-diagonal relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-20 hidden md:block">
             <div className="w-64 h-64 border border-amber-500/30 rounded-full flex items-center justify-center">
               <div className="w-48 h-48 border border-amber-500/20 rounded-full flex items-center justify-center">
@@ -564,7 +564,7 @@ function Contact() {
                 </div>
               </div>
 
-              <div className="flex flex-col justify-center items-center bg-black/50 p-10 clip-diagonal-bordered">
+              <div className="flex flex-col justify-center items-center border border-white/10 bg-black/50 p-10 clip-diagonal">
                 <MessageCircle size={48} className="text-[#25D366] mb-6" />
                 <h3 className="font-display text-2xl font-bold uppercase tracking-tight mb-3 text-center">WhatsApp is the<br />Fastest Way</h3>
                 <p className="text-white/50 text-sm text-center mb-8 max-w-sm">
