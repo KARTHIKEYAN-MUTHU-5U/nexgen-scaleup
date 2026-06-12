@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate, AnimatePresence } from 'motion/react';
-import { AppWindow, Cpu, Droplets, GraduationCap, LayoutGrid, ArrowRight, Activity, Globe, Send, Play, BarChart3, Database, Workflow, Plus, X } from 'lucide-react';
-import { useRef, useEffect, useState, MouseEvent as ReactMouseEvent } from 'react';
+import { AppWindow, Droplets, GraduationCap, ArrowRight, Activity, Play, BarChart3, Database, Workflow, X, Mail, Phone, MapPin, CheckCircle, Loader2 } from 'lucide-react';
+import { useRef, useEffect, useState, MouseEvent as ReactMouseEvent, FormEvent } from 'react';
 
 // --- UTILITY COMPONENTS ---
 
@@ -26,7 +26,7 @@ function CustomCursor() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-8 h-8 rounded-full border border-white/30 pointer-events-none z-[100] mix-blend-difference hidden md:block flex items-center justify-center"
+      className="fixed top-0 left-0 w-8 h-8 rounded-full border border-white/30 pointer-events-none z-[100] mix-blend-difference hidden md:flex items-center justify-center"
       style={{ x: cursorXSpring, y: cursorYSpring }}
     >
       <div className="w-1 h-1 bg-white rounded-full" />
@@ -36,10 +36,10 @@ function CustomCursor() {
 
 function RevealText({ text, delay = 0, className = "" }: { text: string, delay?: number, className?: string }) {
   const words = text.split(" ");
-  
+
   const container = {
     hidden: { opacity: 0 },
-    visible: (i: number = 1) => ({
+    visible: () => ({
       opacity: 1,
       transition: { staggerChildren: 0.05, delayChildren: delay }
     })
@@ -51,10 +51,10 @@ function RevealText({ text, delay = 0, className = "" }: { text: string, delay?:
   };
 
   return (
-    <motion.div 
-      variants={container} 
-      initial="hidden" 
-      whileInView="visible" 
+    <motion.div
+      variants={container}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
       className={`flex flex-wrap gap-x-[0.25em] ${className}`}
     >
@@ -71,6 +71,7 @@ function RevealText({ text, delay = 0, className = "" }: { text: string, delay?:
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
@@ -80,9 +81,17 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      setMobileMenuOpen(false);
+    }
+  };
+
   return (
     <>
-      <motion.nav 
+      <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -96,18 +105,58 @@ function Navbar() {
             NexGen<span className="text-white/40">ScaleUp</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-xs font-mono font-medium text-ng-text-muted uppercase tracking-widest">
-            <a href="#ecosystem" className="hover:text-white transition-colors">// Ecosystem</a>
-            <a href="#about" className="hover:text-white transition-colors">// Core</a>
-            <a href="#contact" className="hover:text-white transition-colors">// Link</a>
+            <button onClick={() => scrollToSection('ecosystem')} className="hover:text-white transition-colors cursor-pointer">// Ecosystem</button>
+            <button onClick={() => scrollToSection('about')} className="hover:text-white transition-colors cursor-pointer">// Core</button>
+            <button onClick={() => scrollToSection('contact')} className="hover:text-white transition-colors cursor-pointer">// Link</button>
           </div>
-          <button className="px-6 py-2.5 bg-white text-black font-semibold text-xs uppercase tracking-wider hover:bg-ng-accent transition-colors flex items-center gap-2 clip-diagonal relative group overflow-hidden">
+
+          {/* Desktop CTA */}
+          <button
+            onClick={() => scrollToSection('contact')}
+            className="hidden md:flex px-6 py-2.5 bg-white text-black font-semibold text-xs uppercase tracking-wider hover:bg-ng-accent transition-colors items-center gap-2 clip-diagonal relative group overflow-hidden cursor-pointer"
+          >
             <div className="absolute inset-0 w-full h-full bg-black/10 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
             <span className="relative z-10 flex items-center gap-2">Initialize <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" /></span>
           </button>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden flex flex-col gap-1.5 p-2 cursor-pointer"
+            aria-label="Toggle menu"
+          >
+            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-ng-bg/95 backdrop-blur-xl border-t border-white/5 overflow-hidden"
+            >
+              <div className="flex flex-col items-center py-8 gap-6 text-sm font-mono uppercase tracking-widest">
+                <button onClick={() => scrollToSection('ecosystem')} className="text-ng-text-muted hover:text-white transition-colors cursor-pointer">Ecosystem</button>
+                <button onClick={() => scrollToSection('about')} className="text-ng-text-muted hover:text-white transition-colors cursor-pointer">Core</button>
+                <button onClick={() => scrollToSection('contact')} className="text-ng-text-muted hover:text-white transition-colors cursor-pointer">Contact</button>
+                <button
+                  onClick={() => scrollToSection('contact')}
+                  className="px-6 py-3 bg-ng-accent text-black font-bold text-xs uppercase tracking-wider clip-diagonal cursor-pointer"
+                >
+                  Initialize Project
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.nav>
       {/* Scroll Progress Bar */}
-      <motion.div 
+      <motion.div
         className="fixed top-0 left-0 right-0 h-[2px] bg-ng-accent origin-left z-[60]"
         style={{ scaleX }}
       />
@@ -126,12 +175,17 @@ function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
 
+  const scrollToContact = () => {
+    const el = document.getElementById('contact');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section ref={containerRef} className="relative min-h-[100vh] flex items-center justify-center pt-20 overflow-hidden">
       {/* Dynamic Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] z-0 pointer-events-none" />
-      
-      <motion.div 
+
+      <motion.div
         style={{ y, opacity, scale }}
         className="max-w-7xl mx-auto px-6 md:px-12 w-full z-10"
       >
@@ -142,15 +196,15 @@ function Hero() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-4 border border-white/10 px-4 py-2 bg-black/40 backdrop-blur-md clip-diagonal"
           >
-            <span className="flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-ng-accent opacity-75"></span>
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ng-accent opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-ng-accent"></span>
             </span>
             <span className="text-[10px] font-mono text-ng-accent uppercase tracking-widest leading-none mt-[2px]">
               System Status: Dominant
             </span>
           </motion.div>
-          
+
           <div className="max-w-5xl">
             <h1 className="font-display text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-bold leading-[0.85] tracking-tighter uppercase mb-8">
               <RevealText text="WE BUILD" delay={0.1} />
@@ -159,7 +213,7 @@ function Hero() {
                 <RevealText text="ASSETS." delay={0.4} className="text-ng-accent" />
               </div>
             </h1>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -170,14 +224,17 @@ function Hero() {
                   NexGenScaleUp is a premier technology parent company. We engineer interactive, dopamine-hitting B2B and B2C applications from scratch that completely dominate the market.
                 </p>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] }}
                 className="flex flex-col sm:flex-row gap-6 items-start"
               >
-                <button className="h-16 px-8 bg-white text-black font-semibold text-sm uppercase tracking-wider hover:bg-ng-accent transition-colors flex items-center justify-center gap-3 clip-diagonal group w-full sm:w-auto">
+                <button
+                  onClick={scrollToContact}
+                  className="h-16 px-8 bg-white text-black font-semibold text-sm uppercase tracking-wider hover:bg-ng-accent transition-colors flex items-center justify-center gap-3 clip-diagonal group w-full sm:w-auto cursor-pointer"
+                >
                   <span>Initialize Project</span>
                   <div className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-2 transition-transform">
                     <ArrowRight size={16} />
@@ -200,9 +257,9 @@ function InteractiveMarquee() {
   return (
     <div className="py-12 border-y border-white/5 overflow-hidden flex flex-col gap-4 bg-black relative">
       <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black z-10 pointer-events-none"></div>
-      
+
       {/* Marquee Row 1 */}
-      <motion.div 
+      <motion.div
         animate={{ x: [0, -1000] }}
         transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
         className="flex gap-8 font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase whitespace-nowrap opacity-80"
@@ -218,7 +275,7 @@ function InteractiveMarquee() {
       </motion.div>
 
       {/* Marquee Row 2 (Reverse) */}
-      <motion.div 
+      <motion.div
         animate={{ x: [-1000, 0] }}
         transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
         className="flex gap-8 font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase whitespace-nowrap opacity-40 ml-[-200px]"
@@ -237,15 +294,22 @@ function InteractiveMarquee() {
 }
 
 // Flashlight Bento Card
-function FlashlightCard({ 
-  children, 
-  className = "" 
-}: { 
-  children: React.ReactNode; 
+function FlashlightCard({
+  children,
+  className = ""
+}: {
+  children: React.ReactNode;
   className?: string;
 }) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const background = useMotionTemplate`
+    radial-gradient(
+      600px circle at ${mouseX}px ${mouseY}px,
+      rgba(228, 255, 0, 0.15),
+      transparent 80%
+    )
+  `;
 
   function handleMouseMove({ currentTarget, clientX, clientY }: ReactMouseEvent) {
     const { left, top } = currentTarget.getBoundingClientRect();
@@ -260,15 +324,7 @@ function FlashlightCard({
     >
       <motion.div
         className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100 mix-blend-screen"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              600px circle at ${mouseX}px ${mouseY}px,
-              rgba(228, 255, 0, 0.15),
-              transparent 80%
-            )
-          `,
-        }}
+        style={{ background }}
       />
       <div className="relative h-full z-10 p-8 sm:p-12 flex flex-col">
         {children}
@@ -295,9 +351,9 @@ function Ecosystem() {
             STATUS: OPTIMAL
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          
+
           {/* Flagship */}
           <FlashlightCard className="lg:col-span-8 min-h-[400px]">
             <div className="flex justify-between items-start mb-16">
@@ -308,14 +364,14 @@ function Ecosystem() {
                 Flagship B2B2C
               </div>
             </div>
-            
+
             <div className="mt-auto">
               <h3 className="font-display text-4xl md:text-5xl font-bold mb-4 uppercase tracking-tighter">water.<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">NexGenCore</span></h3>
               <p className="text-white/60 text-lg md:text-xl font-light max-w-2xl leading-relaxed">
                 The ultimate SaaS engine built exclusively for local watercan businesses. We provide end-to-end management, dispatch, and pure scaling infrastructure for all active owners in the pipeline.
               </p>
             </div>
-            
+
             <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
               <Database size={200} />
             </div>
@@ -331,7 +387,7 @@ function Ecosystem() {
                 Partner Node
               </div>
             </div>
-            
+
             <div className="mt-auto">
               <h3 className="font-display text-2xl font-bold mb-3 uppercase tracking-tight">Jobs for You Tamizha</h3>
               <p className="text-white/60 font-light leading-relaxed">
@@ -388,9 +444,9 @@ function Ecosystem() {
 
 function ParadigmShift() {
   return (
-    <section className="py-40 relative z-10 bg-black border-y border-white/10 overflow-hidden">
+    <section id="about" className="py-40 relative z-10 bg-black border-y border-white/10 overflow-hidden">
       <div className="absolute top-0 right-0 w-full md:w-1/2 h-full bg-gradient-to-b from-ng-accent/5 to-transparent pointer-events-none"></div>
-      
+
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center text-center">
         <motion.div
            initial={{ opacity: 0, scale: 0.9 }}
@@ -410,7 +466,7 @@ function ParadigmShift() {
             <span className="block text-outline">YOUR SCALE</span>
           </h2>
         </motion.div>
-        
+
         <p className="text-xl md:text-2xl text-white/50 font-light max-w-2xl mt-12 mb-16 relative z-10">
           We strip away the noise and focus entirely on performant, interactive tech that converts users and automates operations.
         </p>
@@ -434,11 +490,46 @@ function ParadigmShift() {
 }
 
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    message: '',
+  });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) return;
+
+    setStatus('sending');
+
+    // Simulate sending (replace with actual API endpoint when backend is ready)
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    // For now, open mailto as fallback
+    const subject = encodeURIComponent(`New Project Inquiry from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company || 'N/A'}\n\nMessage:\n${formData.message}`
+    );
+    window.open(`mailto:hello@nexgenscaleup.com?subject=${subject}&body=${body}`, '_blank');
+
+    setStatus('sent');
+    setTimeout(() => {
+      setStatus('idle');
+      setFormData({ name: '', email: '', company: '', message: '' });
+    }, 4000);
+  };
+
   return (
     <section id="contact" className="py-32 bg-ng-bg relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="border border-white/10 bg-[#050505] p-8 md:p-16 relative overflow-hidden clip-diagonal">
-          
+
           <div className="absolute top-0 right-0 p-8 opacity-20 hidden md:block">
             <div className="w-64 h-64 border border-ng-accent/30 rounded-full flex items-center justify-center">
               <div className="w-48 h-48 border border-ng-accent/20 rounded-full flex items-center justify-center">
@@ -447,27 +538,122 @@ function Contact() {
             </div>
           </div>
 
-          <div className="relative z-10 max-w-2xl">
+          <div className="relative z-10">
             <div className="flex items-center gap-3 mb-8">
               <span className="w-2 h-2 bg-ng-accent"></span>
               <span className="text-xs font-mono text-white/50 uppercase tracking-widest">Connect to Network</span>
             </div>
-            
-            <h2 className="font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-6 leading-[0.9]">
-              START THE<br/><span className="text-ng-accent">INTEGRATION.</span>
-            </h2>
-            
-            <p className="text-xl text-white/60 font-light mb-12 lg:pr-20">
-              Ready to leave legacy infrastructure behind? Bring us your vision, and we will architect the impossible.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-6">
-              <button className="h-16 px-10 bg-ng-accent text-black font-bold uppercase tracking-widest text-sm hover:bg-white transition-colors flex items-center justify-center gap-4 clip-diagonal w-full sm:w-auto">
-                Execute Process <Play size={16} className="fill-black" />
-              </button>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+              {/* Left — Info */}
+              <div>
+                <h2 className="font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-6 leading-[0.9]">
+                  START THE<br/><span className="text-ng-accent">INTEGRATION.</span>
+                </h2>
+
+                <p className="text-xl text-white/60 font-light mb-12">
+                  Ready to leave legacy infrastructure behind? Bring us your vision, and we will architect the impossible.
+                </p>
+
+                <div className="space-y-4">
+                  <a href="mailto:hello@nexgenscaleup.com" className="flex items-center gap-4 text-white/60 hover:text-ng-accent transition-colors group">
+                    <div className="w-10 h-10 border border-white/10 flex items-center justify-center group-hover:border-ng-accent/50 transition-colors">
+                      <Mail size={18} />
+                    </div>
+                    <span className="font-mono text-sm">hello@nexgenscaleup.com</span>
+                  </a>
+                  <a href="tel:+919876543210" className="flex items-center gap-4 text-white/60 hover:text-ng-accent transition-colors group">
+                    <div className="w-10 h-10 border border-white/10 flex items-center justify-center group-hover:border-ng-accent/50 transition-colors">
+                      <Phone size={18} />
+                    </div>
+                    <span className="font-mono text-sm">+91 98765 43210</span>
+                  </a>
+                  <div className="flex items-center gap-4 text-white/60">
+                    <div className="w-10 h-10 border border-white/10 flex items-center justify-center">
+                      <MapPin size={18} />
+                    </div>
+                    <span className="font-mono text-sm">India // Global Operations</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right — Form */}
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="contact-name" className="block text-xs font-mono text-white/40 uppercase tracking-widest mb-2">Name *</label>
+                    <input
+                      id="contact-name"
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-ng-accent/50 transition-colors font-mono text-sm"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-email" className="block text-xs font-mono text-white/40 uppercase tracking-widest mb-2">Email *</label>
+                    <input
+                      id="contact-email"
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-ng-accent/50 transition-colors font-mono text-sm"
+                      placeholder="john@company.com"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="contact-company" className="block text-xs font-mono text-white/40 uppercase tracking-widest mb-2">Company</label>
+                  <input
+                    id="contact-company"
+                    type="text"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-ng-accent/50 transition-colors font-mono text-sm"
+                    placeholder="Your Company"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact-message" className="block text-xs font-mono text-white/40 uppercase tracking-widest mb-2">Project Brief *</label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-ng-accent/50 transition-colors font-mono text-sm resize-none"
+                    placeholder="Tell us about your vision..."
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={status === 'sending' || status === 'sent'}
+                  className="w-full h-16 bg-ng-accent text-black font-bold uppercase tracking-widest text-sm hover:bg-white transition-colors flex items-center justify-center gap-4 clip-diagonal disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  {status === 'idle' && (
+                    <>Execute Process <Play size={16} className="fill-black" /></>
+                  )}
+                  {status === 'sending' && (
+                    <>Processing... <Loader2 size={16} className="animate-spin" /></>
+                  )}
+                  {status === 'sent' && (
+                    <>Transmission Complete <CheckCircle size={16} /></>
+                  )}
+                  {status === 'error' && (
+                    <>Error — Try Again <X size={16} /></>
+                  )}
+                </button>
+              </form>
             </div>
           </div>
-          
+
         </div>
       </div>
     </section>
@@ -475,10 +661,15 @@ function Contact() {
 }
 
 function Footer() {
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <footer className="bg-black pt-20 pb-10 border-t border-white/10 relative overflow-hidden">
       <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-t from-ng-accent/10 to-transparent pointer-events-none"></div>
-      
+
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
           <div className="col-span-1 md:col-span-2">
@@ -490,17 +681,17 @@ function Footer() {
               Building applications, automating operations, and dominating digital markets with top-tier technology.
             </p>
             <div className="text-xs font-mono text-white/30 uppercase tracking-widest">
-              HQ: GLOBAL // OPERATION: 24/7/365
+              HQ: INDIA // OPERATION: 24/7/365
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-xs font-mono text-white/40 uppercase tracking-widest mb-6">Sys.Assets</h4>
             <ul className="flex flex-col gap-4 text-sm text-white/70">
-              <li><a href="#" className="hover:text-ng-accent transition-colors">water.NexGenCore</a></li>
-              <li><a href="#" className="hover:text-ng-accent transition-colors">Jobs For You Tamizha</a></li>
-              <li><a href="#" className="hover:text-ng-accent transition-colors">Digital Marketing</a></li>
-              <li><a href="#" className="hover:text-ng-accent transition-colors">Custom Software</a></li>
+              <li><button onClick={() => scrollToSection('ecosystem')} className="hover:text-ng-accent transition-colors cursor-pointer">water.NexGenCore</button></li>
+              <li><button onClick={() => scrollToSection('ecosystem')} className="hover:text-ng-accent transition-colors cursor-pointer">Jobs For You Tamizha</button></li>
+              <li><button onClick={() => scrollToSection('ecosystem')} className="hover:text-ng-accent transition-colors cursor-pointer">Digital Marketing</button></li>
+              <li><button onClick={() => scrollToSection('ecosystem')} className="hover:text-ng-accent transition-colors cursor-pointer">Custom Software</button></li>
             </ul>
           </div>
 
@@ -508,12 +699,12 @@ function Footer() {
             <h4 className="text-xs font-mono text-white/40 uppercase tracking-widest mb-6">Comms</h4>
             <ul className="flex flex-col gap-4 text-sm text-white/70">
               <li><a href="mailto:hello@nexgenscaleup.com" className="hover:text-ng-accent transition-colors">hello@nexgenscaleup.com</a></li>
-              <li><a href="#" className="hover:text-ng-accent transition-colors">LinkedIn Node</a></li>
-              <li><a href="#" className="hover:text-ng-accent transition-colors">Twitter Feed</a></li>
+              <li><a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-ng-accent transition-colors">LinkedIn Node</a></li>
+              <li><a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-ng-accent transition-colors">Twitter Feed</a></li>
             </ul>
           </div>
         </div>
-        
+
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-xs font-mono text-white/30 uppercase tracking-widest">
           <div>© {new Date().getFullYear()} NEXGENSCALEUP. ALL RIGHTS RESERVED.</div>
           <div className="mt-4 md:mt-0 flex gap-4">
