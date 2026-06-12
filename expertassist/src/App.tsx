@@ -168,7 +168,7 @@ function QuickServices() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group bg-[#0a0a0a] p-5 clip-diagonal hover:border-amber-500/50 transition-all cursor-pointer"
+              className="group bg-[#0a0a0a] p-5 clip-diagonal hover:bg-[#111] transition-all cursor-pointer"
             >
               <s.icon size={28} className="text-amber-500 mb-3 group-hover:scale-110 transition-transform" />
               <h3 className="font-display font-bold text-sm uppercase tracking-tight mb-1">{s.label}</h3>
@@ -240,7 +240,7 @@ function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group bg-black/50 p-7 clip-diagonal hover:border-amber-500/30 transition-all"
+                className="group bg-black/50 p-7 clip-diagonal hover:bg-white/[0.06] transition-all"
               >
                 <div className="flex justify-between items-start mb-5">
                   <doc.icon size={24} className="text-amber-500" />
@@ -409,11 +409,11 @@ function TrustSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-black/50 p-8 text-left clip-diagonal"
+              className="bg-black/50 p-8 text-left clip-diagonal overflow-visible"
             >
               <b.icon size={24} className="text-amber-500 mb-4" />
               <h3 className="font-display text-lg font-bold uppercase tracking-tight mb-2">{b.title}</h3>
-              <p className="text-white/50 text-sm">{b.desc}</p>
+              <p className="text-white/50 text-sm leading-relaxed">{b.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -426,7 +426,7 @@ function TrustSection() {
             { metric: 'Tamil', desc: 'FULL SUPPORT' },
           ].map((stat, i) => (
             <div key={i} className="flex flex-col items-center">
-              <div className="font-mono text-3xl md:text-4xl text-amber-500 font-bold mb-2">{stat.metric}</div>
+              <div className="font-mono text-3xl md:text-4xl text-amber-500 font-bold mb-2" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{stat.metric}</div>
               <div className="text-[10px] font-mono text-white/40 tracking-widest uppercase">{stat.desc}</div>
             </div>
           ))}
@@ -452,7 +452,7 @@ function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <section id="faq" className="py-32 bg-black border-t border-white/10">
-      <div className="max-w-3xl mx-auto px-5 md:px-12">
+      <div className="max-w-4xl mx-auto px-5 md:px-12">
         <h2 className="font-display text-3xl md:text-6xl font-bold tracking-tighter uppercase mb-16 text-center">
           <span className="text-amber-500">//</span> Frequently<br />Asked.
         </h2>
@@ -585,7 +585,7 @@ function Contact() {
 // --- Footer ---
 function Footer() {
   return (
-    <footer className="bg-black pt-16 pb-8 border-t border-white/10">
+    <footer className="bg-black pt-16 pb-12 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-5 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <div>
@@ -623,7 +623,7 @@ function Footer() {
           <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-2">
             © {new Date().getFullYear()} ExpertAssist by NexGenScaleUp. All rights reserved.
           </p>
-          <p className="text-[10px] font-mono text-white/20 max-w-2xl mx-auto">
+          <p className="text-[11px] font-mono text-white/40 max-w-2xl mx-auto leading-relaxed">
             Disclaimer: We are a private document assistance service. We are not a government office or portal. We assist with applications, corrections, and registrations through proper channels.
           </p>
         </div>

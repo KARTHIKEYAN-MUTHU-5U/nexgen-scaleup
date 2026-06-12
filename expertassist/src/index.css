@@ -28,13 +28,12 @@ body {
   line-height: 1.6;
 }
 
-.font-display { font-family: 'Space Grotesk', sans-serif; }
-.font-mono { font-family: 'JetBrains Mono', monospace; }
+.font-display { font-family: 'Space Grotesk', sans-serif !important; }
+.font-mono { font-family: 'JetBrains Mono', monospace !important; }
 
 /* Clip diagonal — same brutalist style as main site */
 .clip-diagonal {
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  filter: drop-shadow(0 0 0.5px rgba(255, 255, 255, 0.15));
 }
 
 /* Text outline for brutalist effect */
