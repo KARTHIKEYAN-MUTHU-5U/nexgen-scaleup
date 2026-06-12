@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate, AnimatePresence } from 'motion/react';
-import { AppWindow, Droplets, GraduationCap, ArrowRight, Activity, Play, BarChart3, Database, Workflow, X, Mail, Phone, MapPin, CheckCircle, Loader2 } from 'lucide-react';
+import { AppWindow, Droplets, GraduationCap, ArrowRight, Activity, Play, BarChart3, Database, Workflow, X, Mail, Phone, MapPin, CheckCircle, Loader2, FileText, Github } from 'lucide-react';
 import { useRef, useEffect, useState, MouseEvent as ReactMouseEvent, FormEvent } from 'react';
 
 // --- UTILITY COMPONENTS ---
@@ -242,7 +242,7 @@ function Hero() {
                 </button>
                 <div className="h-16 flex items-center gap-4 text-xs font-mono text-white/50 border border-white/10 px-6 backdrop-blur-sm">
                   <Activity size={14} className="text-ng-accent" />
-                  DATA_SCALING_ACTIVE
+                  ACCEPTING_PROJECTS
                 </div>
               </motion.div>
             </div>
@@ -396,6 +396,32 @@ function Ecosystem() {
             </div>
           </FlashlightCard>
 
+          {/* ExpertAssist */}
+          <FlashlightCard className="lg:col-span-12 min-h-[350px]">
+            <div className="flex justify-between items-start mb-12">
+              <div className="w-16 h-16 bg-white/5 border border-white/10 flex items-center justify-center text-amber-400">
+                <FileText size={32} />
+              </div>
+              <div className="px-4 py-1.5 bg-amber-400/10 text-amber-400 border border-amber-400/20 text-[10px] font-mono tracking-widest uppercase">
+                Document Services B2C
+              </div>
+            </div>
+
+            <div className="mt-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
+              <div>
+                <h3 className="font-display text-4xl md:text-5xl font-bold mb-4 uppercase tracking-tighter">Expert<span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-300">Assist</span></h3>
+                <p className="text-white/60 text-lg md:text-xl font-light max-w-2xl leading-relaxed">
+                  Trusted WhatsApp-based document assistance for Tamil Nadu. We help with Passport, PAN, Voter ID, Certificates, Aadhaar updates, and Business Registrations like GST, MSME, FSSAI & more.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {['Passport', 'PAN Card', 'Voter ID', 'GST', 'MSME', 'FSSAI'].map(tag => (
+                  <span key={tag} className="px-3 py-1.5 bg-white/5 border border-white/10 text-[10px] font-mono tracking-widest uppercase text-white/50">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </FlashlightCard>
+
           {/* Agency */}
           <FlashlightCard className="lg:col-span-5 min-h-[350px]">
              <div className="flex justify-between items-start mb-12">
@@ -473,10 +499,10 @@ function ParadigmShift() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 relative z-10 w-full max-w-4xl border-t border-white/10 pt-16">
           {[
-            { metric: "100%", desc: "IN-HOUSE BUILD" },
-            { metric: "<0.1s", desc: "LATENCY TARGETS" },
-            { metric: "♾️", desc: "INF SCALABILITY" },
-            { metric: "ALL", desc: "PROPRIETARY IP" }
+            { metric: "5+", desc: "ACTIVE PRODUCTS" },
+            { metric: "100%", desc: "BUILT FROM SCRATCH" },
+            { metric: "24/7", desc: "SYSTEM UPTIME" },
+            { metric: "EST.24", desc: "FOUNDED" }
           ].map((stat, i) => (
              <div key={i} className="flex flex-col items-center">
                 <div className="font-mono text-3xl md:text-5xl text-ng-accent font-bold mb-2">{stat.metric}</div>
@@ -508,15 +534,13 @@ function Contact() {
 
     setStatus('sending');
 
-    // Simulate sending (replace with actual API endpoint when backend is ready)
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // For now, open mailto as fallback
     const subject = encodeURIComponent(`New Project Inquiry from ${formData.name}`);
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company || 'N/A'}\n\nMessage:\n${formData.message}`
     );
-    window.open(`mailto:hello@nexgenscaleup.com?subject=${subject}&body=${body}`, '_blank');
+    window.open(`mailto:hello.Nexgenscaleup@gmail.com?subject=${subject}&body=${body}`, '_blank');
 
     setStatus('sent');
     setTimeout(() => {
@@ -556,23 +580,23 @@ function Contact() {
                 </p>
 
                 <div className="space-y-4">
-                  <a href="mailto:hello@nexgenscaleup.com" className="flex items-center gap-4 text-white/60 hover:text-ng-accent transition-colors group">
+                  <a href="mailto:hello.Nexgenscaleup@gmail.com" className="flex items-center gap-4 text-white/60 hover:text-ng-accent transition-colors group">
                     <div className="w-10 h-10 border border-white/10 flex items-center justify-center group-hover:border-ng-accent/50 transition-colors">
                       <Mail size={18} />
                     </div>
-                    <span className="font-mono text-sm">hello@nexgenscaleup.com</span>
+                    <span className="font-mono text-sm">hello.Nexgenscaleup@gmail.com</span>
                   </a>
-                  <a href="tel:+919876543210" className="flex items-center gap-4 text-white/60 hover:text-ng-accent transition-colors group">
+                  <a href="tel:+916381777977" className="flex items-center gap-4 text-white/60 hover:text-ng-accent transition-colors group">
                     <div className="w-10 h-10 border border-white/10 flex items-center justify-center group-hover:border-ng-accent/50 transition-colors">
                       <Phone size={18} />
                     </div>
-                    <span className="font-mono text-sm">+91 98765 43210</span>
+                    <span className="font-mono text-sm">+91 63817 77977</span>
                   </a>
                   <div className="flex items-center gap-4 text-white/60">
                     <div className="w-10 h-10 border border-white/10 flex items-center justify-center">
                       <MapPin size={18} />
                     </div>
-                    <span className="font-mono text-sm">India // Global Operations</span>
+                    <span className="font-mono text-sm">Chennai, Tamil Nadu // India</span>
                   </div>
                 </div>
               </div>
@@ -681,7 +705,7 @@ function Footer() {
               Building applications, automating operations, and dominating digital markets with top-tier technology.
             </p>
             <div className="text-xs font-mono text-white/30 uppercase tracking-widest">
-              HQ: INDIA // OPERATION: 24/7/365
+              HQ: CHENNAI, TN // OPERATION: 24/7/365
             </div>
           </div>
 
@@ -689,8 +713,8 @@ function Footer() {
             <h4 className="text-xs font-mono text-white/40 uppercase tracking-widest mb-6">Sys.Assets</h4>
             <ul className="flex flex-col gap-4 text-sm text-white/70">
               <li><button onClick={() => scrollToSection('ecosystem')} className="hover:text-ng-accent transition-colors cursor-pointer">water.NexGenCore</button></li>
+              <li><button onClick={() => scrollToSection('ecosystem')} className="hover:text-ng-accent transition-colors cursor-pointer">ExpertAssist</button></li>
               <li><button onClick={() => scrollToSection('ecosystem')} className="hover:text-ng-accent transition-colors cursor-pointer">Jobs For You Tamizha</button></li>
-              <li><button onClick={() => scrollToSection('ecosystem')} className="hover:text-ng-accent transition-colors cursor-pointer">Digital Marketing</button></li>
               <li><button onClick={() => scrollToSection('ecosystem')} className="hover:text-ng-accent transition-colors cursor-pointer">Custom Software</button></li>
             </ul>
           </div>
@@ -698,9 +722,10 @@ function Footer() {
           <div>
             <h4 className="text-xs font-mono text-white/40 uppercase tracking-widest mb-6">Comms</h4>
             <ul className="flex flex-col gap-4 text-sm text-white/70">
-              <li><a href="mailto:hello@nexgenscaleup.com" className="hover:text-ng-accent transition-colors">hello@nexgenscaleup.com</a></li>
-              <li><a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-ng-accent transition-colors">LinkedIn Node</a></li>
-              <li><a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-ng-accent transition-colors">Twitter Feed</a></li>
+              <li><a href="mailto:hello.Nexgenscaleup@gmail.com" className="hover:text-ng-accent transition-colors">hello.Nexgenscaleup@gmail.com</a></li>
+              <li><a href="tel:+916381777977" className="hover:text-ng-accent transition-colors">+91 63817 77977</a></li>
+              <li><a href="https://www.linkedin.com/in/karthikeyan-m-nexgen" target="_blank" rel="noopener noreferrer" className="hover:text-ng-accent transition-colors">LinkedIn Node</a></li>
+              <li><a href="https://github.com/KARTHIKEYAN-MUTHU-5U" target="_blank" rel="noopener noreferrer" className="hover:text-ng-accent transition-colors">GitHub Hub</a></li>
             </ul>
           </div>
         </div>
