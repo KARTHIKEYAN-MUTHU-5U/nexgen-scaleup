@@ -32,6 +32,9 @@ const serviceMessages: Record<string, string> = {
   'IEC Code': 'Hi, I need help with *IEC (Import Export Code)*.\n\nI want to register for an Import Export Code for international trade.\n\nPlease guide me on documents required, timeline, and charges.',
   'Trademark Filing': 'Hi, I need help with *Trademark Registration*.\n\nI want to register a trademark for: (Brand Name / Logo / Both)\n\nPlease guide me on the process, timeline, and charges.',
   'DPIIT Startup': 'Hi, I need help with *DPIIT Startup India Registration*.\n\nI want to register my startup for DPIIT recognition and benefits.\n\nPlease guide me on eligibility, process, and charges.',
+
+  // Quick Services shortcut label
+  'Business Reg.': 'Hi, I need help with *Business Registration* services.\n\nI am interested in: (GST / MSME Udyam / FSSAI / IEC / Trademark / DPIIT Startup)\n\nPlease guide me on the process, documents required, and charges.',
 };
 
 const waLink = (service: string) => {
