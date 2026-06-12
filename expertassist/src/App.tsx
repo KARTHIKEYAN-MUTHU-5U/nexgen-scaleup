@@ -39,7 +39,7 @@ function Navbar() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent py-6'}`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 flex justify-between items-center">
           <div className="font-display font-bold text-xl tracking-tighter flex items-center gap-3">
             <div className="w-8 h-8 bg-amber-500 text-black flex items-center justify-center font-mono text-xs font-bold clip-diagonal">EA</div>
             Expert<span className="text-white/40">Assist</span>
@@ -105,7 +105,7 @@ function Hero() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="font-display text-[2.5rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[7rem] font-bold leading-[0.9] tracking-tighter uppercase mb-4"
+              className="font-display text-[2.8rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[7.5rem] font-bold leading-[0.85] tracking-tighter uppercase mb-4"
             >
               <span className="block">YOUR DOCS.</span>
               <span className="block text-amber-500">OUR CARE.</span>
@@ -155,7 +155,7 @@ const quickServices = [
 
 function QuickServices() {
   return (
-    <section className="py-28 border-y border-white/5 bg-black">
+    <section className="py-20 border-y border-white/5 bg-black">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
           {quickServices.map((s, i) => (
@@ -168,7 +168,7 @@ function QuickServices() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group bg-[#0a0a0a] p-7 clip-diagonal hover:bg-[#111] transition-all cursor-pointer"
+              className="group bg-[#0a0a0a] p-5 clip-diagonal hover:bg-[#111] hover:-translate-y-1 transition-all duration-300 cursor-pointer border border-white/5 hover:border-amber-500/20"
             >
               <s.icon size={28} className="text-amber-500 mb-3 group-hover:scale-110 transition-transform" />
               <h3 className="font-display font-bold text-sm uppercase tracking-tight mb-1">{s.label}</h3>
@@ -240,7 +240,7 @@ function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group bg-black/50 p-9 clip-diagonal hover:bg-white/[0.06] transition-all"
+                className="group bg-black/50 p-9 clip-diagonal hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 border border-white/[0.08] hover:border-amber-500/20"
               >
                 <div className="flex justify-between items-start mb-5">
                   <doc.icon size={24} className="text-amber-500" />
@@ -394,7 +394,7 @@ function TrustSection() {
         >
           <h2 className="font-display text-4xl md:text-7xl font-bold tracking-tighter uppercase leading-[0.85] mb-8">
             <span className="block text-white">WHY PEOPLE</span>
-            <span className="block text-outline">TRUST US</span>
+            <span className="block" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.5)', color: 'transparent' }}>TRUST US</span>
           </h2>
           <p className="text-[#a3a3a3] text-lg max-w-2xl mx-auto mb-20">
             We're not a government office. We're a careful, trusted document assistance service that makes the process simple for you.
@@ -409,7 +409,7 @@ function TrustSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-black/50 p-10 text-left clip-diagonal"
+              className="bg-black/50 p-10 text-left clip-diagonal border border-white/[0.08] hover:border-amber-500/20 hover:-translate-y-1 transition-all duration-300"
             >
               <b.icon size={24} className="text-amber-500 mb-4" />
               <h3 className="font-display text-lg font-bold uppercase tracking-tight mb-2">{b.title}</h3>
@@ -426,7 +426,7 @@ function TrustSection() {
             { metric: 'Tamil', desc: 'FULL SUPPORT' },
           ].map((stat, i) => (
             <div key={i} className="flex flex-col items-center">
-              <div className="font-mono text-3xl md:text-4xl text-amber-500 font-bold mb-2" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{stat.metric}</div>
+              <div className="font-mono text-4xl md:text-5xl text-amber-500 font-bold mb-2" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{stat.metric}</div>
               <div className="text-[10px] font-mono text-white/40 tracking-widest uppercase">{stat.desc}</div>
             </div>
           ))}
@@ -641,6 +641,32 @@ function WhatsAppFloat() {
   );
 }
 
+// --- Back to Top ---
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => setVisible(window.scrollY > 600);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-24 right-6 z-50 w-12 h-12 bg-amber-500 text-black flex items-center justify-center clip-diagonal hover:bg-amber-400 transition-colors cursor-pointer shadow-lg shadow-amber-500/20"
+          aria-label="Back to top"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+}
+
 // --- App ---
 export default function App() {
   return (
@@ -658,6 +684,7 @@ export default function App() {
       </main>
       <Footer />
       <WhatsAppFloat />
+      <BackToTop />
     </div>
   );
 }
