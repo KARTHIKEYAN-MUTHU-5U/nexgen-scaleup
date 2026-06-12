@@ -92,7 +92,7 @@ function Hero() {
 
       <div className="max-w-7xl mx-auto px-5 md:px-12 w-full z-10">
         <div className="flex flex-col items-start gap-6">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="flex items-center gap-4 border border-white/10 px-4 py-2 bg-black/40 backdrop-blur-md clip-diagonal">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="flex items-center gap-4 px-4 py-2 bg-black/40 backdrop-blur-md clip-diagonal">
             <span className="flex h-2 w-2 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#25D366]"></span>
@@ -131,7 +131,7 @@ function Hero() {
                 <span>Message on WhatsApp</span>
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </a>
-              <div className="h-16 flex items-center gap-4 text-xs font-mono text-white/50 border border-white/10 px-6 backdrop-blur-sm">
+              <div className="h-16 flex items-center gap-4 text-xs font-mono text-white/50 px-6 backdrop-blur-sm">
                 <Shield size={14} className="text-amber-500" />
                 NOT_A_GOVERNMENT_OFFICE
               </div>
@@ -168,7 +168,7 @@ function QuickServices() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group border border-white/10 bg-[#0a0a0a] p-5 clip-diagonal hover:border-amber-500/50 transition-all cursor-pointer"
+              className="group bg-[#0a0a0a] p-5 clip-diagonal hover:border-amber-500/50 transition-all cursor-pointer"
             >
               <s.icon size={28} className="text-amber-500 mb-3 group-hover:scale-110 transition-transform" />
               <h3 className="font-display font-bold text-sm uppercase tracking-tight mb-1">{s.label}</h3>
@@ -240,7 +240,7 @@ function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group border border-white/10 bg-black/50 p-7 clip-diagonal hover:border-amber-500/30 transition-all"
+                className="group bg-black/50 p-7 clip-diagonal hover:border-amber-500/30 transition-all"
               >
                 <div className="flex justify-between items-start mb-5">
                   <doc.icon size={24} className="text-amber-500" />
@@ -261,14 +261,14 @@ function Services() {
           </div>
 
           {/* Certificates sub-section */}
-          <div className="mt-8 border border-white/10 bg-black/50 p-7 clip-diagonal">
+          <div className="mt-8 bg-black/50 p-7 clip-diagonal">
             <div className="flex items-start gap-4 mb-4">
               <Award size={24} className="text-amber-500 flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-display text-xl font-bold uppercase tracking-tight mb-3">Government Certificates</h3>
                 <div className="flex flex-wrap gap-3">
                   {certificates.map(cert => (
-                    <a key={cert} href={waLink(cert)} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-white/5 border border-white/10 text-[11px] font-mono tracking-wider text-white/60 hover:text-amber-500 hover:border-amber-500/30 transition-all cursor-pointer">
+                    <a key={cert} href={waLink(cert)} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-white/5 text-[11px] font-mono tracking-wider text-white/60 hover:text-amber-500 hover:border-amber-500/30 transition-all cursor-pointer">
                       {cert}
                     </a>
                   ))}
@@ -341,7 +341,7 @@ function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
-              className="relative border border-white/10 bg-[#0a0a0a] p-8 clip-diagonal"
+              className="relative bg-[#0a0a0a] p-8 clip-diagonal"
             >
               <div className="font-mono text-5xl font-bold text-white/5 absolute top-4 right-6">{step.num}</div>
               <step.icon size={28} className="text-amber-500 mb-6" />
@@ -409,7 +409,7 @@ function TrustSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="border border-white/10 bg-black/50 p-8 text-left clip-diagonal"
+              className="bg-black/50 p-8 text-left clip-diagonal"
             >
               <b.icon size={24} className="text-amber-500 mb-4" />
               <h3 className="font-display text-lg font-bold uppercase tracking-tight mb-2">{b.title}</h3>
@@ -464,7 +464,7 @@ function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="border border-white/10 bg-[#0a0a0a] clip-diagonal overflow-hidden"
+              className="bg-[#0a0a0a] clip-diagonal overflow-hidden"
             >
               <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex items-center justify-between p-6 text-left cursor-pointer group">
                 <span className="font-display font-bold text-sm md:text-base uppercase tracking-tight group-hover:text-amber-500 transition-colors pr-4">{faq.q}</span>
@@ -496,7 +496,7 @@ function Contact() {
   return (
     <section id="contact" className="py-32 bg-[#0a0a0a]">
       <div className="max-w-7xl mx-auto px-5 md:px-12">
-        <div className="border border-white/10 bg-[#050505] p-8 md:p-16 clip-diagonal relative overflow-hidden">
+        <div className="bg-[#050505] p-8 md:p-16 clip-diagonal relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-20 hidden md:block">
             <div className="w-64 h-64 border border-amber-500/30 rounded-full flex items-center justify-center">
               <div className="w-48 h-48 border border-amber-500/20 rounded-full flex items-center justify-center">
@@ -532,28 +532,28 @@ function Contact() {
                   </a>
 
                   <a href="tel:+916381777977" className="flex items-center gap-4 text-white/60 hover:text-amber-500 transition-colors group">
-                    <div className="w-12 h-12 border border-white/10 flex items-center justify-center group-hover:border-amber-500/50 transition-colors">
+                    <div className="w-12 h-12 flex items-center justify-center group-hover:border-amber-500/50 transition-colors">
                       <Phone size={18} />
                     </div>
                     <span className="font-mono text-sm">+91 63817 77977</span>
                   </a>
 
                   <a href="mailto:hello.Nexgenscaleup@gmail.com" className="flex items-center gap-4 text-white/60 hover:text-amber-500 transition-colors group">
-                    <div className="w-12 h-12 border border-white/10 flex items-center justify-center group-hover:border-amber-500/50 transition-colors">
+                    <div className="w-12 h-12 flex items-center justify-center group-hover:border-amber-500/50 transition-colors">
                       <Mail size={18} />
                     </div>
                     <span className="font-mono text-sm">hello.Nexgenscaleup@gmail.com</span>
                   </a>
 
                   <div className="flex items-center gap-4 text-white/60">
-                    <div className="w-12 h-12 border border-white/10 flex items-center justify-center">
+                    <div className="w-12 h-12 flex items-center justify-center">
                       <MapPin size={18} />
                     </div>
                     <span className="font-mono text-sm">Chennai, Tamil Nadu // India</span>
                   </div>
 
                   <div className="flex items-center gap-4 text-white/60">
-                    <div className="w-12 h-12 border border-white/10 flex items-center justify-center">
+                    <div className="w-12 h-12 flex items-center justify-center">
                       <Clock size={18} />
                     </div>
                     <div>
@@ -564,7 +564,7 @@ function Contact() {
                 </div>
               </div>
 
-              <div className="flex flex-col justify-center items-center border border-white/10 bg-black/50 p-10 clip-diagonal">
+              <div className="flex flex-col justify-center items-center bg-black/50 p-10 clip-diagonal">
                 <MessageCircle size={48} className="text-[#25D366] mb-6" />
                 <h3 className="font-display text-2xl font-bold uppercase tracking-tight mb-3 text-center">WhatsApp is the<br />Fastest Way</h3>
                 <p className="text-white/50 text-sm text-center mb-8 max-w-sm">
