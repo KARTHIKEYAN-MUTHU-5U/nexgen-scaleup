@@ -355,7 +355,8 @@ function Ecosystem() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
           {/* Flagship */}
-          <FlashlightCard className="lg:col-span-8 min-h-[400px]">
+          <a href="https://water.nexgenscaleup.com" target="_blank" rel="noopener noreferrer" className="lg:col-span-8 cursor-pointer">
+          <FlashlightCard className="min-h-[400px] h-full">
             <div className="flex justify-between items-start mb-16">
               <div className="w-16 h-16 bg-white/5 border border-white/10 flex items-center justify-center text-ng-accent">
                 <Droplets size={32} />
@@ -376,6 +377,7 @@ function Ecosystem() {
               <Database size={200} />
             </div>
           </FlashlightCard>
+          </a>
 
           {/* Education Partner */}
           <FlashlightCard className="lg:col-span-4 min-h-[400px]">
@@ -397,7 +399,8 @@ function Ecosystem() {
           </FlashlightCard>
 
           {/* ExpertAssist */}
-          <FlashlightCard className="lg:col-span-12 min-h-[350px]">
+          <a href="https://expertassist.nexgenscaleup.com" target="_blank" rel="noopener noreferrer" className="lg:col-span-12 cursor-pointer">
+          <FlashlightCard className="min-h-[350px] h-full">
             <div className="flex justify-between items-start mb-12">
               <div className="w-16 h-16 bg-white/5 border border-white/10 flex items-center justify-center text-amber-400">
                 <FileText size={32} />
@@ -421,6 +424,7 @@ function Ecosystem() {
               </div>
             </div>
           </FlashlightCard>
+          </a>
 
           {/* Agency */}
           <FlashlightCard className="lg:col-span-5 min-h-[350px]">
