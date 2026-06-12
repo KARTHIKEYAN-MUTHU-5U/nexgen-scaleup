@@ -5,8 +5,39 @@ import './index.css';
 
 // --- WhatsApp Config ---
 const WA_NUMBER = '916381777977';
-const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hi, I need help with a document service.')}`;
-const waLink = (service: string) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hi, I need help with: ${service}`)}`;
+const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hi, I found you on expertassist.nexgenscaleup.com. I need help with a document service. Can you guide me?')}`;
+
+// Detailed per-service WhatsApp messages
+const serviceMessages: Record<string, string> = {
+  // Quick Services (top bar)
+  'Passport': 'Hi, I need help with *Passport* services.\n\nI am interested in: (New Application / Name-DOB Correction / Renewal / Address Change)\n\nPlease guide me on the process, documents required, and charges.',
+  'PAN Card': 'Hi, I need help with *PAN Card* services.\n\nI am interested in: (New PAN Application / Name-DOB Correction / Lost PAN Reissue)\n\nPlease guide me on the process and charges.',
+  'Voter ID': 'Hi, I need help with *Voter ID* services.\n\nI am interested in: (New Registration / Name-Photo Correction / Address Transfer)\n\nPlease guide me on the process and documents needed.',
+  'Aadhaar': 'Hi, I need help with *Aadhaar* services.\n\nI am interested in: (Address Update / Document Update / Mobile Number Link)\n\nPlease guide me on the process and charges.',
+  'Family Card': 'Hi, I need help with *Family Card (Ration Card)* services.\n\nI am interested in: (New Application / Add-Remove Member / Address Change)\n\nPlease guide me on the process.',
+  'Patta & Chitta': 'Hi, I need help with *Patta & Chitta* services.\n\nI am interested in: (Land Record Help / Transfer Assistance / Document Verification)\n\nPlease guide me on the process.',
+  'Certificates': 'Hi, I need help with *Government Certificates*.\n\nI am interested in: (Community / Income / Nativity / First Graduate / Legal Heir Certificate)\n\nPlease guide me on the process and documents required.',
+
+  // Individual certificate types
+  'Community Certificate': 'Hi, I need help with *Community Certificate*.\n\nPlease guide me on the documents required, process, and charges.',
+  'Income Certificate': 'Hi, I need help with *Income Certificate*.\n\nPlease guide me on the documents required, process, and charges.',
+  'Nativity Certificate': 'Hi, I need help with *Nativity Certificate*.\n\nPlease guide me on the documents required, process, and charges.',
+  'First Graduate Certificate': 'Hi, I need help with *First Graduate Certificate*.\n\nPlease guide me on the documents required, process, and charges.',
+  'Legal Heir Certificate': 'Hi, I need help with *Legal Heir Certificate*.\n\nPlease guide me on the documents required, process, and charges.',
+
+  // Business Registrations
+  'GST Registration': 'Hi, I need help with *GST Registration (GSTIN)*.\n\nBusiness type: (Proprietorship / Partnership / Pvt Ltd / LLP)\nState: Tamil Nadu\n\nPlease guide me on documents required, timeline, and charges.',
+  'Udyam MSME': 'Hi, I need help with *Udyam MSME Registration*.\n\nI want to register my business under MSME/Udyam.\n\nPlease guide me on eligibility, documents required, and charges.',
+  'FSSAI License': 'Hi, I need help with *FSSAI License*.\n\nI am interested in: (New Registration / Renewal)\nBusiness type: (Home-based / Restaurant / Manufacturing / Trading)\n\nPlease guide me on the process and charges.',
+  'IEC Code': 'Hi, I need help with *IEC (Import Export Code)*.\n\nI want to register for an Import Export Code for international trade.\n\nPlease guide me on documents required, timeline, and charges.',
+  'Trademark Filing': 'Hi, I need help with *Trademark Registration*.\n\nI want to register a trademark for: (Brand Name / Logo / Both)\n\nPlease guide me on the process, timeline, and charges.',
+  'DPIIT Startup': 'Hi, I need help with *DPIIT Startup India Registration*.\n\nI want to register my startup for DPIIT recognition and benefits.\n\nPlease guide me on eligibility, process, and charges.',
+};
+
+const waLink = (service: string) => {
+  const msg = serviceMessages[service] || `Hi, I found you on expertassist.nexgenscaleup.com.\n\nI need help with *${service}*.\n\nPlease guide me on the process, documents required, and charges.`;
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+};
 
 // --- Noise overlay ---
 function Noise() {
