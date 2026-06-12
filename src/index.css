@@ -61,7 +61,6 @@ body {
 
 .clip-diagonal {
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 /* Wrapper for clipped elements that need a visible border along the clip edge */

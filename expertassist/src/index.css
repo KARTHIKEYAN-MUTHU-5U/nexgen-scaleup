@@ -34,12 +34,7 @@ body {
 /* Clip diagonal — same brutalist style as main site */
 .clip-diagonal {
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-.clip-diagonal-bordered {
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.12)) drop-shadow(0 0 1px rgba(255, 255, 255, 0.12)) drop-shadow(0 0 0.5px rgba(255, 255, 255, 0.08));
+  filter: drop-shadow(0 0 0.5px rgba(255, 255, 255, 0.15));
 }
 
 /* Text outline for brutalist effect */

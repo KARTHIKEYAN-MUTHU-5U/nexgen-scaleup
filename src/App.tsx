@@ -317,11 +317,46 @@ function FlashlightCard({
     mouseY.set(clientY - top);
   }
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dims, setDims] = useState({ w: 0, h: 0 });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setDims({ w: width, h: height });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Main site clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)
+  const borderPath = dims.w > 0
+    ? `M 0.5 0.5 L ${dims.w - 0.5} 0.5 L ${dims.w - 0.5} ${dims.h - 20.5} L ${dims.w - 20.5} ${dims.h - 0.5} L 0.5 ${dims.h - 0.5} Z`
+    : '';
+
   return (
     <div
+      ref={containerRef}
       className={`group relative bg-black/50 overflow-hidden clip-diagonal ${className}`}
       onMouseMove={handleMouseMove}
     >
+      {/* SVG border that precisely follows the clip-path diagonal */}
+      {dims.w > 0 && (
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none z-20"
+          viewBox={`0 0 ${dims.w} ${dims.h}`}
+          preserveAspectRatio="none"
+        >
+          <path
+            d={borderPath}
+            fill="none"
+            stroke="rgba(255,255,255,0.1)"
+            strokeWidth="1"
+          />
+        </svg>
+      )}
       <motion.div
         className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100 mix-blend-screen"
         style={{ background }}
