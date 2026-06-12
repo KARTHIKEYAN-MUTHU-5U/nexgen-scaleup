@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --ea-bg: #0a0a0a;
+  --ea-accent: #f59e0b;
+  --ea-accent-light: #fbbf24;
+  --ea-green: #25D366;
+  --ea-text: #ffffff;
+  --ea-text-muted: #a3a3a3;
+  --ea-surface: #141414;
+  --ea-border: rgba(255,255,255,0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  background-color: var(--ea-bg);
+  color: var(--ea-text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Clip diagonal — same brutalist style as main site */
+.clip-diagonal {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+/* Text outline for brutalist effect */
+.text-outline {
+  -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+  color: transparent;
+}
+
+/* Noise background */
+.noise-bg {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background: transparent url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E") repeat;
+  pointer-events: none;
+  z-index: 99;
+  opacity: 0.5;
+}
+
+/* WhatsApp floating button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 90;
+  width: 64px;
+  height: 64px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse-green 2s infinite;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 32px rgba(37, 211, 102, 0.6);
+}
+
+@keyframes pulse-green {
+  0% { box-shadow: 0 4px 24px rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 4px 32px rgba(37, 211, 102, 0.6); }
+  100% { box-shadow: 0 4px 24px rgba(37, 211, 102, 0.4); }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--ea-bg); }
+::-webkit-scrollbar-thumb { background: var(--ea-accent); border-radius: 3px; }
+
+/* Selection */
+::selection {
+  background: var(--ea-accent);
+  color: black;
+}
