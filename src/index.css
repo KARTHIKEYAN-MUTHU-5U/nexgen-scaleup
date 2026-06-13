@@ -23,6 +23,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Hide default cursor on desktop — custom cursor replaces it */
+@media (min-width: 768px) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
 /* Hide scrollbar for clean look */
 ::-webkit-scrollbar {
   width: 6px;
