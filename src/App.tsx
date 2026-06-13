@@ -5,7 +5,7 @@ import { useRef, useEffect, useState, MouseEvent as ReactMouseEvent, FormEvent }
 // --- UTILITY COMPONENTS ---
 
 function Noise() {
-  return <div className="noise-bg mix-blend-overlay"></div>;
+  return <div className="noise-bg mix-blend-overlay hidden md:block"></div>;
 }
 
 function CustomCursor() {
@@ -166,14 +166,24 @@ function Navbar() {
 
 function Hero() {
   const containerRef = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
+  // Disable parallax on mobile for smooth scrolling
+  const y = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], isMobile ? [1, 1] : [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], isMobile ? [1, 1] : [1, 0.9]);
 
   const scrollToContact = () => {
     const el = document.getElementById('contact');
@@ -182,11 +192,11 @@ function Hero() {
 
   return (
     <section ref={containerRef} className="relative min-h-[100vh] flex items-center justify-center pt-20 overflow-hidden">
-      {/* Dynamic Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] z-0 pointer-events-none" />
+      {/* Dynamic Grid Background — hidden on mobile for performance */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] z-0 pointer-events-none hidden md:block" />
 
       <motion.div
-        style={{ y, opacity, scale }}
+        style={isMobile ? undefined : { y, opacity, scale }}
         className="max-w-7xl mx-auto px-6 md:px-12 w-full z-10"
       >
         <div className="flex flex-col items-start gap-6">
@@ -262,7 +272,8 @@ function InteractiveMarquee() {
       <motion.div
         animate={{ x: [0, -1000] }}
         transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-        className="flex gap-8 font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase whitespace-nowrap opacity-80"
+        className="flex gap-8 font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase whitespace-nowrap opacity-80 will-change-transform"
+        style={{ transform: 'translateZ(0)' }}
       >
         <span className="text-outline">Hyper-Scale Technology</span>
         <span className="text-ng-accent">•</span>
@@ -278,7 +289,8 @@ function InteractiveMarquee() {
       <motion.div
         animate={{ x: [-1000, 0] }}
         transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-        className="flex gap-8 font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase whitespace-nowrap opacity-40 ml-[-200px]"
+        className="flex gap-8 font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase whitespace-nowrap opacity-40 ml-[-200px] will-change-transform"
+        style={{ transform: 'translateZ(0)' }}
       >
         <span>Digital Transformation</span>
         <span className="text-white/20">—</span>
