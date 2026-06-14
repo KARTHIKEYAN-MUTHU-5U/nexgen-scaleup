@@ -272,8 +272,7 @@ function InteractiveMarquee() {
       <motion.div
         animate={{ x: [0, -1000] }}
         transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-        className="flex gap-8 font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase whitespace-nowrap opacity-80 will-change-transform"
-        style={{ transform: 'translateZ(0)' }}
+        className="flex gap-8 font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase whitespace-nowrap opacity-80"
       >
         <span className="text-outline">Hyper-Scale Technology</span>
         <span className="text-ng-accent">•</span>
@@ -289,8 +288,7 @@ function InteractiveMarquee() {
       <motion.div
         animate={{ x: [-1000, 0] }}
         transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-        className="flex gap-8 font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase whitespace-nowrap opacity-40 ml-[-200px] will-change-transform"
-        style={{ transform: 'translateZ(0)' }}
+        className="flex gap-8 font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase whitespace-nowrap opacity-40 ml-[-200px]"
       >
         <span>Digital Transformation</span>
         <span className="text-white/20">—</span>

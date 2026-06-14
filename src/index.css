@@ -15,18 +15,19 @@
   --color-ng-text-muted: #888888;
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
 body {
   background-color: var(--color-ng-bg);
   color: var(--color-ng-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overscroll-behavior: none;
+}
+
+/* Mobile: enable native momentum scrolling */
+@media (max-width: 767px) {
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* Mobile performance: reduce expensive effects */
