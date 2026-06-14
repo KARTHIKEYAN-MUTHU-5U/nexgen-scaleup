@@ -44,8 +44,8 @@ body {
 
 /* Hide default cursor on desktop — custom cursor replaces it */
 @media (min-width: 768px) {
-  *, *::before, *::after {
-    cursor: none !important;
+  html {
+    cursor: none;
   }
 }
 

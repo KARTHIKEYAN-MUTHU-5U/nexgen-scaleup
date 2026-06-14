@@ -11,7 +11,7 @@ function Noise() {
 function CustomCursor() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  const springConfig = { damping: 80, stiffness: 2000, mass: 0.1 };
+  const springConfig = { damping: 40, stiffness: 800, mass: 0.2 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
